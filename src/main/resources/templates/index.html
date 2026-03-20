@@ -110,12 +110,8 @@
       <h1>URL Shortener</h1>
       <p class="muted">Paste a URL, get a short link.</p>
 
-      <!-- FORM (no validation bindings) -->
       <form action="/shorten" method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
         <input type="url" name="url" placeholder="https://example.com" required />
-
         <button type="submit">Shorten</button>
       </form>
 
