@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Shortener</title>
+
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 48px 16px;
+      background: #0b1220;
+      color: #e7ecff;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0 0 16px;
+    }
+
+    .muted {
+      color: rgba(231, 236, 255, 0.75);
+      margin: 0 0 20px;
+    }
+
+    form {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    input[type="url"] {
+      flex: 1 1 420px;
+      min-width: 260px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(0, 0, 0, 0.2);
+      color: #e7ecff;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 0;
+      background: #5b8cff;
+      color: #061022;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+    }
+
+    .error {
+      margin-top: 10px;
+      color: #ffb4b4;
+    }
+
+    .result {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .row {
+      margin: 8px 0;
+      word-break: break-word;
+    }
+
+    a {
+      color: #a9c3ff;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>URL Shortener</h1>
+      <p class="muted">Paste a URL, get a short link.</p>
+
+      <!-- FORM (no validation bindings) -->
+      <form action="/shorten" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <input type="url" name="url" placeholder="https://example.com" required />
+
+        <button type="submit">Shorten</button>
+      </form>
+
+      <!-- Error removed -->
+
+      <!-- RESULT -->
+      <div class="result" th:if="${result != null}">
+        <div class="row">
+          <strong>Short code:</strong>
+          <code th:text="${result.shortCode}">abc123</code>
+        </div>
+
+        <div class="row">
+          <strong>Short URL:</strong>
+          <a
+            th:href="${result.shortUrl}"
+            th:text="${result.shortUrl}"
+            target="_blank"
+            rel="noopener"
+          >
+          </a>
+        </div>
+
+        <div class="row">
+          <strong>Original URL:</strong>
+          <span th:text="${result.originalUrl}"></span>
+        </div>
+
+        <div class="row">
+          <strong>Created:</strong>
+          <span th:text="${result.createdAt}"></span>
+        </div>
+
+        <div class="row" th:if="${result.expiresAt != null}">
+          <strong>Expires:</strong>
+          <span th:text="${result.expiresAt}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
