@@ -2,8 +2,6 @@
 
 🔗 Live Demo: https://url-shortener-java-57k9.onrender.com
 
-📂 GitHub Repo: [https://github.com/your-username/urlshortener](https://url-shortener-java-57k9.onrender.com/shorten)
-
 A URL Shortener built using Spring Boot.
 
 ## Features
